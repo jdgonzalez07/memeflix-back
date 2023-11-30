@@ -6,6 +6,7 @@ const movieSchema = Schema(
     description: { type: String, require: true },
     image: { type: String, require: true },
     trailer: { type: String, default: "No contamos con el trailer" },
+    movie: { type: String, default: "No contamos con la película" },
     actors: { type: Array, default: "Los actores no estan disponibles" },
   },
   {

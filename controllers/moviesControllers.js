@@ -1,4 +1,3 @@
-
 import { Movie } from "../Models/Movie.js";
 
 const moviesController = {
@@ -8,16 +7,15 @@ const moviesController = {
     let success = true;
     try {
       movies = await Movie.find();
-      throw new Error("Error creado por juandi")
-     /*  res.json({
+      res.json({
         response: movies,
         success,
         error: null,
-      }); */
+      });
     } catch (error) {
       console.log(error);
       success = false;
-      next(error)
+      next(error);
     }
   },
 
@@ -40,12 +38,12 @@ const moviesController = {
 
   getOneMovie: async (req, res, next) => {
     const { id } = req.params;
-    console.log(id)
+    console.log(id);
     let movie;
     let success = true;
     try {
       movie = await Movie.findById(id);
-      console.log(movie)
+      console.log(movie);
       res.json({
         response: movie,
         success,
@@ -56,9 +54,49 @@ const moviesController = {
         response: error,
         success: false,
         error: error,
-       
       });
-       console.log(error)
+      console.log(error);
+    }
+  },
+
+  updateMovie: async (req, res, next) => {
+    const {id} = req.params;
+    console.log(id)
+    let updatedMovie;
+    let success = true;
+    try {
+      updatedMovie = await Movie.findOneAndUpdate({_id:id}, req.body, {new:true})
+      res.json({
+        response:updatedMovie,
+        success,
+        error:null
+      })
+    } catch (error) {
+      console.log(error)
+      success= false;  
+      next(error)
+    }
+
+
+  },
+
+  deleteMovie: async (req, res, next) => {
+    const {id} = req.params
+    console.log(id)
+    let deletedMovie;
+    let success = true;
+    try {
+      deletedMovie = await Movie.findOneAndDelete({_id:id})
+      res.json({
+        response:deletedMovie,
+        success,
+        error:null
+      })
+    } catch (error) {
+      console.log(error)
+      success = false;
+      next(error)
+      
     }
   },
 };
